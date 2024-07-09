@@ -19,7 +19,7 @@ const Footer = () => {
                 <img src={linkedin} alt="" />
             </div>
         </section>
-        <section className="flex flex-col gap-3 md:flex-row md:justify-between md:w-[80%] lg:w-[60%]">
+        <section className="flex flex-row flex-wrap pt-6 md:pt-0 gap-14  md:justify-between md:w-[80%] lg:w-[60%]">
             <div className="space-y-4">
                 <header className="text-lg font-bold">
                     Company
@@ -54,14 +54,17 @@ const Footer = () => {
             </div>
             <div className="space-y-4">
                 <header className="text-lg font-bold">
-                    Company
+                    Support
                 </header>
                 <div className="flex flex-col gap-1">
                     <Link to='/'>
-                    Products
+                    FAQs
                     </Link>
-                    <Link to='/carts'>
-                        Carts
+                    <Link to='/'>
+                        Support Us
+                    </Link>
+                    <Link to='/'>
+                        Contact Us
                     </Link>
                 </div>
             </div>

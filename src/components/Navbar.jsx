@@ -1,11 +1,17 @@
-import { useEffect } from "react"
-import { Link, NavLink } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, NavLink, useLocation } from "react-router-dom"
 import close from "../assets/close.svg"
 import ham from "../assets/hammenu.svg"
 import logo from "../assets/logo.svg"
 
 const Navbar = () => {
+  const [checkout, setCheckout] = useState(false)
+  const location = useLocation()
   useEffect(()=>{
+    const checkPath = location.pathname.slice(1,9)
+    if(checkPath == 'checkout'){
+      setCheckout(true)
+    }
     const mobMenu = document.querySelector('#mobby')
   const ham = document.querySelector('#ham')
   const mobUl = document.querySelector(".mobUl")
@@ -39,16 +45,19 @@ const Navbar = () => {
       document.body.classList.remove('bodyStiff')
     },1000)
   })
-  })
+  },[location.pathname])
   return (
     <section className="flex justify-between items-center py-3 px-4 md:py-8 md:px-10 md:pt-8 lg:px-20 bg-[#EEE8E8] fixed z-40 w-full" id="nav">
-        <nav className="lg:flex lg:justify-between lg:items-center font-roboto lg:w-full"  >
+        {checkout  ? (<div className="flex w-full justify-center">
+          <img src={logo} alt="" />
+        </div>) : (<>
+          <nav className="lg:flex lg:justify-between lg:items-center font-roboto lg:w-full"  >
           <div className=" lg:flex items-center lg:w-full" >
               <Link to="/" className="w-[20%]"><img src={logo} alt="Logo svg"/></Link>
               <div id="mobby" className="hidden lg:flex w-[90%] justify-center">
                 <ul className="hidden lg:flex list-none lg:gap-11 w-[80%] border text-base text-black-100 font-medium mobUl lg:items-center" >
                   <div className="flex justify-end">
-                    <img src={close} alt="" className="closeIcon lg:hidden"/>
+                    <img src={close} alt="" className="closeIcon lg:hidden w-12"/>
                   </div>
                   <NavLink className={({isActive})=> [
                       isActive ? "p-2 rounded bg-[#F5F5F5]" : "",
@@ -65,7 +74,8 @@ const Navbar = () => {
               </div>
           </div>
         </nav>
-        <img src={ham} alt="" className="lg:hidden w-16" id="ham"/>
+        <img src={ham} alt="" className="lg:hidden w-12" id="ham"/>
+        </>)}
       </section>
   )
 }

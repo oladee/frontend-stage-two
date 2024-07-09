@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body{
+    background-color: #EEE8E8;
+}
+
 .bodyStiff {
 	margin: 0; height: 100%; overflow: hidden
   }
@@ -55,6 +60,18 @@ svg.thin{
 #mobby.open{
     display: flex;
     justify-content: end;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 
