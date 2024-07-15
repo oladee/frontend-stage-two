@@ -3,8 +3,11 @@ import { Link, NavLink, useLocation } from "react-router-dom"
 import close from "../assets/close.svg"
 import ham from "../assets/hammenu.svg"
 import logo from "../assets/logo.svg"
+import { ProductContext } from "../context/ProductContext"
+import { useContext } from "react"
 
 const Navbar = () => {
+  const {cart} = useContext(ProductContext)
   const [checkout, setCheckout] = useState(false)
   const location = useLocation()
   useEffect(()=>{
@@ -66,9 +69,12 @@ const Navbar = () => {
                     <li>Product</li>
                   </NavLink>
                   <NavLink className={({isActive})=> [
-                      isActive ? "p-2 rounded bg-[#F5F5F5]" : "",
-                    ].join(" ")} to="/cart">
+                      isActive ? "p-2 rounded bg-[#F5F5F5] relative" : "relative",
+                    ].join(" ")} to="/cart" state={[...cart]}>
                     <li>Cart</li>
+                    <li className="absolute text-xs md:text-sm top-[-5px] right-[-10px] text-red-400 ">
+                      {cart.length || ''}
+                    </li>
                   </NavLink>    
                 </ul>
               </div>

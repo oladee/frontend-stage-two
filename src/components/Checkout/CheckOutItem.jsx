@@ -1,18 +1,18 @@
 import PropTypes from "prop-types"
 
-const CheckOutItem = ({name, color, img, quantity, price}) => {
+const CheckOutItem = ({name, img, quantity, price}) => {
   return (
     <div className="pt-3 border-b-2 border-black-200 pb-2">
         <div className="flex gap-6 md:gap-20">
             <div >
-                <img src={img} alt="" className="w-[80px] object-contain rounded-md"/>
+                <img src={'https://api.timbu.cloud/images/' + img} alt="" className="w-[80px] h-[80px] object-contain rounded-md"/>
             </div>
             <div className="text-sm font-medium">
                 <h2>
                     {name}
                 </h2>
                 <p>
-                    color : {color}
+                    color : Black
                 </p>
             </div>
         </div>

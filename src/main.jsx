@@ -9,6 +9,7 @@ import {
 import Product from './pages/Product.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
+import ProductContextProvider from "./context/ProductContext.jsx"
 
 const router = createBrowserRouter([
   {
@@ -24,11 +25,7 @@ const router = createBrowserRouter([
         element : <Cart/>,
       },
       {
-        path : '/cart/:id',
-        element : <Cart/>
-      },
-      {
-        path : '/checkout/:id',
+        path : '/checkout',
         element : <Checkout/>
       },
     ]
@@ -37,6 +34,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ProductContextProvider>
+      <RouterProvider router={router} />
+    </ProductContextProvider>
   </React.StrictMode>,
 )

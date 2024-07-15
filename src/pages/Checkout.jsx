@@ -1,22 +1,16 @@
-import { useEffect, useState } from "react"
-import { Form, useParams } from "react-router-dom"
-import { products } from "../constants"
+import { Form } from "react-router-dom"
 import visa from "../assets/visa.svg"
 import master from "../assets/master.svg"
 import paypal from "../assets/paypal.svg"
 import { ErrorMessage, Field, Formik } from "formik"
 import * as Yup from "yup"
 import CheckOutItem from "../components/Checkout/CheckOutItem"
+import { useContext } from "react"
+import { ProductContext } from "../context/ProductContext"
 
 const Checkout = () => {
-  const {id} = useParams()
-  const [details, setDetails] = useState([])
-    useEffect(()=>{
-        const productInfo = products.filter((product)=> product.name == id)
-        if(productInfo.length > 0){
-            setDetails(productInfo)
-        }
-    },[id])
+
+  const {cart, tP} = useContext(ProductContext)
 
   return (
     <div className="pt-28 pb-12 md:pt-32 lg:pb-20 lg:pt-40 px-5 md:px-14 lg:px-14 grid gap-7 lg:gap-44 lg:grid-cols-2">
@@ -89,7 +83,11 @@ const Checkout = () => {
           Your Order
          </header>
          <section>
-           <CheckOutItem color={details[0]?.color} img={details[0]?.img} name={details[0]?.name} price={details[0]?.actualPrice} quantity={details[0]?.minquantity}/>
+
+          {
+            cart.map((item)=> <CheckOutItem key={item.id} img={item.img} name={item.name} price={item.price} quantity={item.quantity}/>)
+          }
+           
          </section>
          <h1 className="font-semibold pt-4">
           Order Summary
@@ -99,7 +97,7 @@ const Checkout = () => {
             Subtotal
           </h2>
           <p>
-            N{details[0]?.actualPrice}
+            N{tP}
           </p>
          </div>
          <div className="flex items-center font-medium justify-between pb-4 border-b-2 border-black-200">
@@ -107,7 +105,7 @@ const Checkout = () => {
             Tax
           </h2>
           <p>
-            N{details[0]?.actualPrice / 1000 || 0}
+            N{tP / 1000 || 0}
           </p>
          </div>
          <div className="flex items-center font-medium justify-between border-black-200 pt-3">
@@ -115,7 +113,7 @@ const Checkout = () => {
             Total
           </h2>
           <p>
-            N{(details[0]?.actualPrice + details[0]?.actualPrice / 1000).toLocaleString("en-US") || 0}
+            N{(tP + tP / 1000).toLocaleString("en-US") || 0}
           </p>
          </div>
       </section>

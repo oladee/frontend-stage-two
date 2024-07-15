@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { products } from "../constants"
+import { useContext} from "react"
 import Item from "../components/Cart/Item"
+import { ProductContext } from "../context/ProductContext"
+import { useNavigate } from "react-router-dom"
 
 const Cart = () => {
-    const {id} = useParams()
+    const {cart, tP} = useContext(ProductContext)
     const navigate = useNavigate()
-    const [details, setDetails] = useState([])
-    const [disabled, setDisabled] = useState(true)
-    useEffect(()=>{
-        const productInfo = products.filter((product)=> product.name == id)
-        if(productInfo.length > 0){
-            setDisabled(false)
-            setDetails(productInfo)
-        }
-    },[id])
   return (
     <div className="pt-28 md:pt-32 lg:pt-40 px-5 md:px-14 lg:px-14 grid lg:gap-44 lg:grid-cols-2">
       <section>
         {
-            details.length > 0 ? <Item img={details[0].img} name={details[0].name} price={details[0].actualPrice} color={details[0].color} />  :  (<h1>Looks like you are yet to select a Product</h1>)
+            cart.length > 0 ? cart.map((item)=>(<Item key={item?.id} img={item?.img} name={item?.name} price={item?.price} id={item?.id}  quantity={item?.quantity} /> )) :  (<h1>Looks like you are yet to select a Product</h1>)
         }
       </section>
       <section>
@@ -31,7 +22,7 @@ const Cart = () => {
                 Temporary Amount
             </h2>
             <p>
-                {(details[0]?.actualPrice || 0).toLocaleString("en-US")}
+                {(tP || 0).toLocaleString("en-US")}
             </p>
         </div>
         <div className=" border-b-2 border-black-100 flex items-center justify-between pb-3 font-medium text-sm">
@@ -39,7 +30,7 @@ const Cart = () => {
                 Charges
             </h2>
             <p>
-                N{details[0]?.actualPrice / 1000 || 0} 
+                N{tP / 1000 || 0} 
             </p>
         </div>
         <div className="flex items-center justify-between pt-9 font-medium text-sm pb-16">
@@ -49,12 +40,12 @@ const Cart = () => {
             </h2>
              <p>
                 {
-                    (details[0]?.actualPrice + details[0]?.actualPrice / 1000).toLocaleString("en-US") || 0
+                    (tP + tP / 1000).toLocaleString("en-US") || 0
                 }
              </p>
         </div>
         <div className="w-full">
-        <button onClick={()=>{navigate(`/checkout/${details[0]?.name}`)}} className='text-xs md:text-sm text-white bg-[#65558F] py-2 px-3 md:py-3 md:px-6 rounded-full border border-[#65558F] hover:bg-[#EEE8E8] hover:text-[#65558F] transition-all duration-500 w-[100%] disabled:bg-[#a69ac5]' disabled={disabled}>
+        <button onClick={()=> {navigate('/checkout')}} className='text-xs md:text-sm text-white bg-[#65558F] py-2 px-3 md:py-3 md:px-6 rounded-full border border-[#65558F] hover:bg-[#EEE8E8] hover:text-[#65558F] transition-all duration-500 w-[100%] disabled:bg-[#a69ac5]' disabled={!cart.length > 0} >
             CHECKOUT
         </button >
         </div>
